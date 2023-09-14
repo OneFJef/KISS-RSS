@@ -4,8 +4,8 @@
 
   export let data;
 
-  function findUsername(link: String) {
-    const regex = /@([^/]+)/;
+  function findUsername(link: any) {
+    const regex = /(?:@|\/u\/)([^/]+)/;
     const match = link.match(regex);
     return match[0];
   }
@@ -32,11 +32,14 @@
             src="https://www.google.com/s2/favicons?domain={item.link}"
             alt="Logo for article site."
           />
-          {#if !item.author}
-            {findUsername(item.guid)}
-          {:else}
+          {#if item.author}
             {item.author}
+          {:else if item.creator}
+            {findUsername(item.creator)}
+          {:else}
+            {findUsername(item.guid)}
           {/if}
+
           <span class="text-accent">&nbsp;|&nbsp;</span>
           {dayjs(item.pubDate).format("MMMM D, YYYY")}
         </div>
