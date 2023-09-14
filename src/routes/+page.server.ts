@@ -4,6 +4,7 @@ import { feedUrls } from "$lib/feedUrls";
 import dayjs from "dayjs";
 
 let parsedFeed: any[] = [];
+
 let parser = new Parser();
 
 export const load = (async () => {
@@ -23,8 +24,6 @@ export const load = (async () => {
       ? -1
       : 0
   );
-
-  console.log(parsedFeed);
 
   return { sortedFeed };
 }) satisfies PageServerLoad;
