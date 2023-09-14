@@ -1,6 +1,7 @@
 import type { PageServerLoad } from "./$types";
 import Parser from "rss-parser";
 import { feedUrls } from "$lib/feedUrls";
+import dayjs from "dayjs";
 
 let parsedFeed: any[] = [];
 let parser = new Parser();
@@ -16,7 +17,11 @@ export const load = (async () => {
   }
 
   let sortedFeed = parsedFeed.sort((p1, p2) =>
-    p1.isoDate < p2.isoDate ? 1 : p1.isoDate > p2.isoDate ? -1 : 0
+    dayjs(p1.pubDate) < dayjs(p2.pubDate)
+      ? 1
+      : dayjs(p1.pubDate) > dayjs(p2.pubDate)
+      ? -1
+      : 0
   );
 
   console.log(parsedFeed);
