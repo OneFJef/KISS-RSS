@@ -1,8 +1,14 @@
-<script>
+<script lang="ts">
   import "../app.css";
   import dayjs from "dayjs";
 
   export let data;
+
+  function findUsername(link: String) {
+    const regex = /@([^/]+)/;
+    const match = link.match(regex);
+    return match[0];
+  }
 </script>
 
 <main class="flex flex-col items-center justify-center mx-2 my-1">
@@ -13,7 +19,11 @@
       <div class="card-body">
         <h2 class="card-title">
           <a href={item.link}>
-            {item.title}
+            {#if !item.title}
+              {item.contentSnippet}
+            {:else}
+              {item.title}
+            {/if}
           </a>
         </h2>
         <div class="font-medium flex items-center">
@@ -22,7 +32,11 @@
             src="https://www.google.com/s2/favicons?domain={item.link}"
             alt="Logo for article site."
           />
-          {item.author}
+          {#if !item.author}
+            {findUsername(item.guid)}
+          {:else}
+            {item.author}
+          {/if}
           <span class="text-accent">&nbsp;|&nbsp;</span>
           {dayjs(item.pubDate).format("MMMM D, YYYY")}
         </div>
