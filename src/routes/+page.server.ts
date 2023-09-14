@@ -16,7 +16,7 @@ export const load = (async () => {
   }
 
   let sortedFeed = parsedFeed.sort((p1, p2) =>
-    p1.pubDate < p2.pubDate ? 1 : p1.pubDate > p2.pubDate ? -1 : 0
+    p1.isoDate < p2.isoDate ? 1 : p1.isoDate > p2.isoDate ? -1 : 0
   );
 
   console.log(parsedFeed);
